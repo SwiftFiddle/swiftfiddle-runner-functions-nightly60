@@ -4,19 +4,18 @@ name: Trigger auto deployment for runner-functions-nightly60
 on:
   # Automatically trigger it when detected changes in repo
   push:
-    branches: 
-      [ main ]
+    branches: [main]
     paths:
-    - '**'
-    - '.github/workflows/runner-functions-nightly60-AutoDeployTrigger-9dea240d-d5a9-40d9-bc8d-554d671bbffa.yml'
+      - "**"
+      - ".github/workflows/runner-functions-nightly60-AutoDeployTrigger-9dea240d-d5a9-40d9-bc8d-554d671bbffa.yml"
 
-  # Allow manual trigger 
-  workflow_dispatch:      
+  # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions: 
+    permissions:
       id-token: write #This is required for requesting the OIDC JWT Token
       contents: read #Required when GH token is used to authenticate with private repo
 
@@ -41,8 +40,6 @@ jobs:
           registryPassword: ${{ secrets.RUNNERFUNCTIONSNIGHTLY60_REGISTRY_PASSWORD }}
           containerAppName: runner-functions-nightly60
           resourceGroup: swiftfiddle
-          imageToBuild: swiftfiddle.azurecr.io/runner-functions-nightly60:${{ github.sha }}
+          imageToBuild: swiftfiddle.azurecr.io/runner-functions-nightly60:latest
           _buildArgumentsKey_: |
             _buildArgumentsValues_
-
-
